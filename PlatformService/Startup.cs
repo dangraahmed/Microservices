@@ -32,7 +32,7 @@ namespace PlatformService
         {
             if (_env.IsProduction())
             {
-                Console.WriteLine($"--> Using InMem DB");
+                Console.WriteLine($"--> Using SqlServer DB");
                 services.AddDbContext<AppDbContext>(opt => opt.UseSqlServer(Configuration.GetConnectionString("PlatformsConn")));
             }
             else
