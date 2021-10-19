@@ -17,18 +17,19 @@ kubectl get namespace
 kubectl get pods --namespace=ingress-nginx
 kubectl get storageclass
 kubectl get pvc
+kubectl get ingress
 
 kubectl apply -f platforms-depl.yaml
-kubectl delete deployment platforms-depl
 kubectl rollout restart deployment platforms-depl
 
 kubectl apply -f .\platforms-np-srv.yaml
-kubectl delete service platformnpservice-srv
 
 kubectl apply -f commands-depl.yaml
 kubectl rollout restart deployment commands-depl
 
 kubectl apply -f ingress-srv.yaml
+
+kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.0.0/deploy/static/provider/cloud/deploy.yaml
 
 kubectl apply -f local-pvc.yaml
 
@@ -37,3 +38,27 @@ kubectl apply -f mssql-plat-depl.yaml
 kubectl apply -f rabbitmq-depl.yaml
 
 dotnet ef migrations add initialmigration
+
+kubectl delete deployment platforms-depl
+kubectl delete deployment commands-depl
+kubectl delete deployment mssql-depl
+kubectl delete deployment rabbitmq-depl
+
+kubectl delete service platformnpservice-srv
+kubectl delete service commands-clusterip-srv
+kubectl delete service mssql-clusterip-srv
+kubectl delete service mssql-loadbalancer-srv
+kubectl delete service platforms-clusterip-srv
+kubectl delete service rabbitmq-clusterip-srv
+kubectl delete service rabbitmq-loadbalancer
+kubectl delete ingress ingress-srv
+kubectl delete -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.0.0/deploy/static/provider/cloud/deploy.yaml
+
+
+kubectl delete -f platforms-depl.yaml
+kubectl delete -f platforms-np-srv.yaml
+kubectl delete -f commands-depl.yaml
+kubectl delete -f ingress-srv.yaml
+kubectl delete -f local-pvc.yaml
+kubectl delete -f mssql-plat-depl.yaml
+kubectl delete -f rabbitmq-depl.yaml
